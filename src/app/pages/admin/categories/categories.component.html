@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Sr No</th>
+                    <th>Category Name</th>
+                    <th>Action</th> 
+                </tr>
+            </thead>
+            <tbody>
+                @for(item of products$ | async;track item;let index=$index){
+                <tr>
+                    <td>{{index+1}}</td>
+                    <td>{{item.categoryName}}</td>
+                    <td> 
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

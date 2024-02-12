@@ -1,0 +1,127 @@
+<!-- <div class="row row-cols-1 row-cols-md-6 g-4">
+    @for(data of productsList;track data)
+      {
+        <div class="col">
+          <div class="card">
+            <img [src]="data.productImageUrl" class="card-img-top" height="200" width="200">
+            <div class="card-body">
+              <h5 class="card-title">{{data.productName}}</h5>
+              <p class="card-text">{{data.productDescription}}</p>
+              <button type="button" class="btn btn-secondary">{{data.productPrice}}</button>
+              
+            </div>
+          </div>
+        </div>
+    }
+  </div>   -->
+
+
+
+  
+<div class="row">
+    <div [ngClass]="isSidePanelVisible ? 'col-8' : 'col-12'" >
+        <div class="card">
+            <div class="card-header bg-primary">
+                <div class="row">
+                    <div class="col-6">
+                        Product List
+                    </div>
+                    <div class="col-6 text-end">
+                        <button class="btn btn-sm btn-success" (click)="openSidePanel()">New</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    @for(product of productsList;track product){
+                    <div class="col-3 pt-2">
+                        <div class="card">
+                            <img class="card-img-top" style="height: 16.125rem !important" [src]="product.productImageUrl" alt="Card image">
+                            <div class="card-body">
+                              <h5 class="card-title" [title]="product.productShortName">{{product.productShortName | titlecase | truncate}}</h5>
+                              <p class="card-text">{{product.categoryName}}</p>
+                              <a title="edit" class="btn btn-primary" (click)="onEdit(product)">Edit</a>
+                              <a  title="delete" class="btn btn-danger mx-2" (click)="onDelete(product)">Delete</a>
+                            </div>
+                          </div>
+                    </div>
+                }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4" *ngIf="isSidePanelVisible">
+        <div class="card">
+            <div class="card-header bg-primary">
+                <div class="row">
+                    <div class="col-6">
+                       New Product 
+                    </div>
+                    <div class="col-6  text-end">
+                        <button title="close" class="btn btn-sm btn-success" (click)="closeSidePanel()">Close</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <label title="Stack Keeping Unit" for="">SKU</label>
+                        <input type="text" [(ngModel)]="productObj.productSku" class="form-control" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="">Name</label>
+                        <input type="text" [(ngModel)]="productObj.productName" class="form-control" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label for="">Short Name</label>
+                        <input type="text" [(ngModel)]="productObj.productShortName" class="form-control" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="">Price</label>
+                        <input type="number" [(ngModel)]="productObj.productPrice" class="form-control" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label for="">Category</label>
+                        <select [(ngModel)]="productObj.categoryId" class="form-select">
+                            @for(cate  of  categoryList;track cate){
+                            <option  [value]="cate.categoryId"> {{cate.categoryName}}</option>
+                        }
+                        </select> 
+                    </div>
+                    <div class="col-6">
+                        <label for="">Delivery Time Span</label>
+                        <input type="text" [(ngModel)]="productObj.deliveryTimeSpan" class="form-control" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="">Image Url</label>
+                        <input type="url" [(ngModel)]="productObj.productImageUrl" class="form-control" required>
+                        
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label title="Describe color, quantity, quality and about product" for="">Product Description</label>
+                        <textarea rows="4" class="form-control" [(ngModel)]="productObj.productDescription"  ></textarea>
+                    </div> 
+                </div>
+                <div class="row pt-2">
+                    <div class="col-md-6 text-center">
+                      <button class="btn btn-danger" (click)="onReset()">Reset</button>
+                    </div>
+                    <div class="col-md-6 text-center">
+                      <button class="btn btn-success" *ngIf="productObj.productId == 0" (click)="onSave()">Create
+                        Product <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
+                      <button class="btn btn-warning" *ngIf="productObj.productId !==0" (click)="onUpdate()">Update
+                        Product <span *ngIf="isApiCallInProgress" class="spinner-border spinner-border-sm ms-1"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
